@@ -23,7 +23,7 @@ localML is a compact causal Transformer with its architecture, training loop, an
 | Random initial weights; no pretrained model downloads | Choose the text, settings, and checkpoints | Train and generate locally without a model API |
 
 > [!IMPORTANT]
-> **This is a text continuation experiment, not a trained chat assistant.** The demo corpus contains stories, so even a prompt such as “Hello” can lead into a story. Readable output does not mean the model understands questions or follows instructions.
+> **This is a text continuation experiment, not a trained coding assistant.** The demo corpus contains short Python examples. Generated text may resemble code without being correct or runnable; the model does not understand requests or follow instructions.
 
 ## Quick start
 
@@ -51,29 +51,12 @@ This trains on `data/demo.txt` and saves to `checkpoints/text.pt`. Progress is p
 ### 3. Generate text
 
 ```powershell
-.\.venv\Scripts\python.exe app.py generate --prompt "The morning " --length 300 --temperature 0.5
+.\.venv\Scripts\python.exe app.py generate --prompt "def " --length 300 --temperature 0.5
 ```
 
 Generation uses `checkpoints/text.pt` by default. Replace the prompt to explore other continuations.
 
-<details>
-<summary><strong>Already using this workspace? Try the existing readable checkpoint.</strong></summary>
-
-The local `checkpoints/readable.pt` has completed 2,110 training steps. Run:
-
-```powershell
-.\.venv\Scripts\python.exe app.py generate --checkpoint checkpoints/readable.pt --prompt "The morning " --length 300 --temperature 0.5
-```
-
-Observed output begins:
-
-> The morning began with rain against the kitchen window. Mira opened her notebook and wrote down three things she wanted to finish before sunset.
-
-This passage reproduces the training corpus. The extra training improved readability by memorizing the demo stories, while held-out validation loss worsened. Unfamiliar prompts can still produce malformed words.
-
-The original 110-step `checkpoints/demo.pt` is preserved. Checkpoints are ignored by Git, so these local files will not be present in a fresh clone; use the training steps above to create your own.
-
-</details>
+The training corpus is a small collection of Python examples, so use this as an experiment with code-shaped text. A larger, high-quality code corpus is needed for more useful results. Training on a new corpus does not change an existing checkpoint; choose a new checkpoint path or start fresh when changing the data.
 
 ## Train on your own text
 
@@ -179,7 +162,7 @@ See all options:
 | What you see | What to do |
 | :--- | :--- |
 | Jumbled letters or broken words | Check that you loaded the intended checkpoint and trained it sufficiently. Try a lower temperature; it cannot compensate for missing training. |
-| Stories instead of answers | The demo teaches story continuation. Conversation requires suitable dialogue data and a consistent turn format; this project has no dedicated chat mode. |
+| Output is not valid code | The demo corpus is small and the model predicts text one byte at a time. Add more high-quality code examples and train a new checkpoint; generated code still needs review. |
 | Missing checkpoint | Train first, or supply the path to an existing checkpoint with `--checkpoint`. |
 | “Checkpoint exists” | Add `--resume`, or select a new output path. |
 | “Training data changed” | Resume with the original data, or train a new checkpoint on the changed corpus. |
@@ -195,7 +178,7 @@ localML/
 ├── model.py             # Transformer, sampling, and checkpoint handling
 ├── requirements.txt     # PyTorch and NumPy dependencies
 ├── data/
-│   └── demo.txt         # Original sample stories
+│   └── demo.txt         # Short Python examples
 ├── tests/
 │   └── test_model.py    # Learning, causality, data, and generation checks
 └── checkpoints/         # Local weights; ignored by Git

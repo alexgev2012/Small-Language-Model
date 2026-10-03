@@ -1,23 +1,417 @@
-The morning began with rain against the kitchen window. Mira opened her notebook and wrote down three things she wanted to finish before sunset. She would repair the little wooden shelf, visit the garden, and write a letter to her friend. None of these tasks was urgent, but each deserved a little care.
+# Python examples for a small next-byte language model.
+# Train on this file to learn the shape of simple Python programs.
 
-In the workshop, a lamp cast a warm circle over the table. There were pencils in a jar and a ruler beside a sheet of paper. Mira measured the board twice before making a mark. A careful beginning made the rest of the work easier. When the shelf was straight, she set a small blue cup on it and smiled.
+def greet(name):
+    """Return a short greeting for one person."""
+    if not name:
+        return "Hello, stranger!"
+    return f"Hello, {name}!"
 
-The garden path was wet and bright. Drops of water rested on the leaves. Near the gate, a bird hopped between two stones. Mira waited quietly until it flew away. She checked the soil around the young plants and moved an empty pot into the shade. The garden changed a little every day, even when nobody noticed.
 
-At noon, she made soup with carrots and potatoes. While the water warmed, she sliced a loaf of bread. Her neighbor arrived carrying a basket of apples. They ate at the kitchen table and talked about the weather, the garden, and the old bridge at the end of the road. A simple meal was better with company.
+def main():
+    names = ["Ada", "Grace", "Linus"]
+    for name in names:
+        print(greet(name))
 
-After lunch, Mira returned to her notebook. A letter did not need to contain grand news. She described the rain, the shelf, and the bird by the gate. She asked whether her friend had finished reading the book they had discussed. At the bottom of the page, she drew a small picture of the blue cup.
 
-By evening, the clouds had moved beyond the hills. The light became soft and gold. Mira walked to the bridge and watched the river pass beneath it. The water carried leaves around the stones. She thought about how much could happen in an ordinary day when she paid attention to small things.
+if __name__ == "__main__":
+    main()
 
-The next morning, the town library opened early. A young reader asked the librarian for a story about the sea. The librarian found a book with a green cover and a map on the first page. The reader sat near the window and began. Outside, people hurried along the street, but inside the library there was time to wonder.
 
-On a quiet desk stood a computer and a notebook. To solve a difficult problem, the student divided it into smaller questions. First she wrote down what she knew. Then she tested one idea at a time. When an idea failed, she kept the observation and changed the next experiment. Learning was a process of trying, noticing, and trying again.
+def average(numbers):
+    """Calculate the arithmetic mean, or return None for empty input."""
+    if not numbers:
+        return None
+    return sum(numbers) / len(numbers)
 
-A program follows instructions. A text model learns patterns from examples. During training, it predicts the next piece of text and compares the prediction with the actual example. The error guides a small change in its numbers. Many small changes can help it recognize recurring patterns, but a few paragraphs cannot teach it everything about the world.
 
-At the station, a traveler checked the clock and unfolded a paper map. The train would arrive in ten minutes. There was enough time to buy a cup of tea and find the right platform. She placed the map in her bag and listened to the announcements. A clear plan made the unfamiliar place feel easier to understand.
+scores = [82, 95, 73, 88]
+mean_score = average(scores)
+print(f"Average score: {mean_score:.1f}")
 
-That afternoon, two friends built a birdhouse from spare wood. One held the pieces while the other marked the holes. They checked that the edges were smooth and the roof would keep out rain. When the work was finished, they hung the house near the garden wall. They would have to wait patiently to see whether a bird would move in.
 
-The last page of the notebook was still blank. Mira did not hurry to fill it. She placed her pen beside the book and looked out at the evening sky. Tomorrow would bring new questions and small discoveries. For now, the room was quiet, the shelf was steady, and the blue cup held a single flower from the garden.
+def count_words(text):
+    """Count words without treating letter case as significant."""
+    counts = {}
+    for word in text.lower().split():
+        cleaned = word.strip(".,!?;:\"'()[]")
+        if cleaned:
+            counts[cleaned] = counts.get(cleaned, 0) + 1
+    return counts
+
+
+sentence = "Code is read more often than it is written."
+for word, count in sorted(count_words(sentence).items()):
+    print(f"{word}: {count}")
+
+
+def fibonacci(limit):
+    """Yield Fibonacci numbers smaller than limit."""
+    first, second = 0, 1
+    while first < limit:
+        yield first
+        first, second = second, first + second
+
+
+for value in fibonacci(100):
+    print(value)
+
+
+def is_prime(number):
+    """Return True when number is a prime integer."""
+    if number < 2:
+        return False
+    divisor = 2
+    while divisor * divisor <= number:
+        if number % divisor == 0:
+            return False
+        divisor += 1
+    return True
+
+
+primes = [value for value in range(2, 50) if is_prime(value)]
+print(primes)
+
+
+def binary_search(values, target):
+    """Return the index of target in a sorted list, or -1 if it is absent."""
+    low = 0
+    high = len(values) - 1
+    while low <= high:
+        middle = (low + high) // 2
+        if values[middle] == target:
+            return middle
+        if values[middle] < target:
+            low = middle + 1
+        else:
+            high = middle - 1
+    return -1
+
+
+numbers = [3, 8, 12, 19, 27, 31]
+print(binary_search(numbers, 19))
+
+
+def remove_duplicates(items):
+    """Keep the first occurrence of each item and preserve the order."""
+    seen = set()
+    result = []
+    for item in items:
+        if item not in seen:
+            seen.add(item)
+            result.append(item)
+    return result
+
+
+print(remove_duplicates(["red", "blue", "red", "green", "blue"]))
+
+
+def group_by_first_letter(words):
+    """Group words by their lowercase first letter."""
+    groups = {}
+    for word in words:
+        if word:
+            key = word[0].lower()
+            groups.setdefault(key, []).append(word)
+    return groups
+
+
+words = ["pear", "plum", "apple", "apricot", "banana"]
+for letter, group in sorted(group_by_first_letter(words).items()):
+    print(letter, group)
+
+
+class Rectangle:
+    """A rectangle with a width and height."""
+
+    def __init__(self, width, height):
+        if width < 0 or height < 0:
+            raise ValueError("Dimensions must be nonnegative")
+        self.width = width
+        self.height = height
+
+    @property
+    def area(self):
+        return self.width * self.height
+
+    @property
+    def perimeter(self):
+        return 2 * (self.width + self.height)
+
+    def __repr__(self):
+        return f"Rectangle(width={self.width}, height={self.height})"
+
+
+shape = Rectangle(5, 3)
+print(shape)
+print(shape.area)
+
+
+from dataclasses import dataclass
+
+
+@dataclass
+class Task:
+    title: str
+    done: bool = False
+
+    def finish(self):
+        self.done = True
+
+
+tasks = [Task("write code"), Task("read the output")]
+tasks[0].finish()
+for task in tasks:
+    state = "done" if task.done else "open"
+    print(f"{task.title}: {state}")
+
+
+def safe_divide(numerator, denominator):
+    """Divide two numbers and report invalid division clearly."""
+    try:
+        return numerator / denominator
+    except ZeroDivisionError as error:
+        raise ValueError("denominator must not be zero") from error
+
+
+try:
+    print(safe_divide(12, 3))
+except ValueError as error:
+    print(f"Could not calculate: {error}")
+
+
+def parse_integer(value, default=0):
+    """Convert a string to an integer, falling back on invalid input."""
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return default
+
+
+print(parse_integer("42"))
+print(parse_integer("not a number", default=-1))
+
+
+def read_lines(path):
+    """Read a UTF-8 text file and remove trailing newline characters."""
+    with open(path, "r", encoding="utf-8") as source:
+        return [line.rstrip("\n") for line in source]
+
+
+def write_lines(path, lines):
+    """Write text lines to a UTF-8 file."""
+    with open(path, "w", encoding="utf-8") as destination:
+        for line in lines:
+            destination.write(line + "\n")
+
+
+def save_settings(path, settings):
+    """Save a dictionary as formatted JSON."""
+    import json
+
+    with open(path, "w", encoding="utf-8") as destination:
+        json.dump(settings, destination, indent=2, sort_keys=True)
+
+
+def load_settings(path):
+    """Load a dictionary from a JSON file."""
+    import json
+
+    with open(path, "r", encoding="utf-8") as source:
+        return json.load(source)
+
+
+def squares_up_to(limit):
+    """Return pairs of a number and its square."""
+    return [(number, number * number) for number in range(limit)]
+
+
+for number, square in squares_up_to(6):
+    print(f"{number} squared is {square}")
+
+
+def flatten(rows):
+    """Turn a list of lists into a single list."""
+    return [item for row in rows for item in row]
+
+
+matrix = [[1, 2], [3, 4], [5, 6]]
+print(flatten(matrix))
+
+
+def transpose(matrix):
+    """Swap the rows and columns of a rectangular matrix."""
+    if not matrix:
+        return []
+    return [list(column) for column in zip(*matrix)]
+
+
+grid = [[1, 2, 3], [4, 5, 6]]
+print(transpose(grid))
+
+
+def merge_counts(first, second):
+    """Add values with matching keys from two dictionaries."""
+    merged = first.copy()
+    for key, value in second.items():
+        merged[key] = merged.get(key, 0) + value
+    return merged
+
+
+inventory = merge_counts({"apples": 4, "pears": 2}, {"apples": 3})
+print(inventory)
+
+
+def longest_word(words):
+    """Return the longest word, preferring the first on ties."""
+    return max(words, key=len, default="")
+
+
+print(longest_word(["small", "program", "language", "model"]))
+
+
+def caesar_cipher(message, shift):
+    """Shift English letters while leaving punctuation unchanged."""
+    result = []
+    for character in message:
+        if "a" <= character <= "z":
+            offset = ord("a")
+            result.append(chr((ord(character) - offset + shift) % 26 + offset))
+        elif "A" <= character <= "Z":
+            offset = ord("A")
+            result.append(chr((ord(character) - offset + shift) % 26 + offset))
+        else:
+            result.append(character)
+    return "".join(result)
+
+
+encrypted = caesar_cipher("Hello, Python!", 3)
+print(encrypted)
+print(caesar_cipher(encrypted, -3))
+
+
+def validate_email_address(address):
+    """Perform a small practical check for an email-like string."""
+    if not isinstance(address, str):
+        return False
+    if address.count("@") != 1:
+        return False
+    name, domain = address.split("@")
+    return bool(name and "." in domain and not domain.startswith("."))
+
+
+addresses = ["reader@example.org", "missing-at-sign", "@example.org"]
+for address in addresses:
+    print(address, validate_email_address(address))
+
+
+def read_positive_number(prompt):
+    """Keep asking until the user enters a positive number."""
+    while True:
+        answer = input(prompt)
+        try:
+            number = float(answer)
+        except ValueError:
+            print("Please enter a number.")
+            continue
+        if number > 0:
+            return number
+        print("The number must be greater than zero.")
+
+
+def describe_temperature(celsius):
+    """Convert Celsius to Fahrenheit and format both values."""
+    fahrenheit = celsius * 9 / 5 + 32
+    return f"{celsius:.1f} C is {fahrenheit:.1f} F"
+
+
+for temperature in (-10, 0, 20, 37):
+    print(describe_temperature(temperature))
+
+
+def find_pairs(numbers, target):
+    """Return unique pairs of values whose sum equals target."""
+    seen = set()
+    pairs = set()
+    for number in numbers:
+        other = target - number
+        if other in seen:
+            pairs.add(tuple(sorted((number, other))))
+        seen.add(number)
+    return sorted(pairs)
+
+
+print(find_pairs([2, 7, 11, 15, 3, 6], 9))
+
+
+def selection_sort(values):
+    """Return a sorted copy using the selection sort algorithm."""
+    result = list(values)
+    for start in range(len(result)):
+        smallest = start
+        for index in range(start + 1, len(result)):
+            if result[index] < result[smallest]:
+                smallest = index
+        result[start], result[smallest] = result[smallest], result[start]
+    return result
+
+
+print(selection_sort([8, 3, 5, 1, 9, 2]))
+
+
+def calculate_median(numbers):
+    """Return the middle value of a nonempty sequence of numbers."""
+    if not numbers:
+        raise ValueError("numbers must not be empty")
+    ordered = sorted(numbers)
+    middle = len(ordered) // 2
+    if len(ordered) % 2:
+        return ordered[middle]
+    return (ordered[middle - 1] + ordered[middle]) / 2
+
+
+print(calculate_median([8, 1, 4, 3]))
+
+
+def test_greet_returns_a_name():
+    assert greet("Ada") == "Hello, Ada!"
+
+
+def test_greet_handles_empty_name():
+    assert greet("") == "Hello, stranger!"
+
+
+def test_average_handles_empty_list():
+    assert average([]) is None
+
+
+def test_average_calculates_mean():
+    assert average([2, 4, 6]) == 4
+
+
+def test_binary_search_finds_value():
+    assert binary_search([1, 4, 7, 9], 7) == 2
+
+
+def test_binary_search_reports_missing_value():
+    assert binary_search([1, 4, 7, 9], 5) == -1
+
+
+def test_remove_duplicates_keeps_order():
+    assert remove_duplicates([3, 2, 3, 1, 2]) == [3, 2, 1]
+
+
+def test_transpose_empty_matrix():
+    assert transpose([]) == []
+
+
+if __name__ == "__main__":
+    test_greet_returns_a_name()
+    test_greet_handles_empty_name()
+    test_average_handles_empty_list()
+    test_average_calculates_mean()
+    test_binary_search_finds_value()
+    test_binary_search_reports_missing_value()
+    test_remove_duplicates_keeps_order()
+    test_transpose_empty_matrix()
+    print("All example checks passed.")
